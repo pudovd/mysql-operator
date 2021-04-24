@@ -1,0 +1,7 @@
+apiVersion: workshop.example.com/v1alpha1
+kind: CustomMysql
+metadata:
+  name: custommysql-sample
+spec:
+  # Add fields here
+  foo: bar
