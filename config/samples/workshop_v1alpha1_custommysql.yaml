@@ -4,4 +4,4 @@ metadata:
   name: custommysql-sample
 spec:
   # Add fields here
-  foo: bar
+  foo: xyz
