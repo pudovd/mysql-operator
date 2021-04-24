@@ -29,7 +29,7 @@ spec:
         - /manager
         args:
         - --leader-elect
-        imagePullPolicy: never
+        imagePullPolicy: Never
         image: controller:latest
         name: manager
         securityContext:

@@ -56,11 +56,11 @@ func (r *CustomMysqlReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 
 	err := r.Client.Get(ctx, types.NamespacedName{
 		Namespace: req.Namespace,
-		Name: req.Name,
+		Name:      req.Name,
 	}, cr)
 
 	if err != nil {
-		return ctrl.Result{RequeueAfter: 5 * time.Second},err
+		return ctrl.Result{RequeueAfter: 5 * time.Second}, err
 	}
 
 	logger.Info("Got reconcile request", "foo field", cr.Spec.Foo)
