@@ -2,6 +2,8 @@ package controllers
 
 import (
 	"context"
+	"k8s.io/apimachinery/pkg/api/errors"
+	"k8s.io/apimachinery/pkg/types"
 
 	"github.com/workshop/mysql-operator/api/v1alpha1"
 	appsv1 "k8s.io/api/apps/v1"
@@ -40,7 +42,21 @@ func (r *CustomMysqlReconciler) CreateService(cr *v1alpha1.CustomMysql) error {
 			Selector: labels,
 		},
 	}
-	return r.Client.Create(context.TODO(), srv)
+	currService := &corev1.Service{}
+	err := r.Client.Get(context.TODO(), types.NamespacedName{
+		Name:      serviceName,
+		Namespace: cr.Namespace,
+	}, currService)
+
+	if err != nil && !errors.IsNotFound(err) {
+		return err
+	}
+
+	if errors.IsNotFound(err) {
+		return r.Client.Create(context.TODO(), srv)
+	}
+
+	return nil
 }
 
 func (r *CustomMysqlReconciler) CreateSfs(cr *v1alpha1.CustomMysql) error {
@@ -114,5 +130,25 @@ func (r *CustomMysqlReconciler) CreateSfs(cr *v1alpha1.CustomMysql) error {
 			},
 		},
 	}
-	return r.Client.Create(context.TODO(), sfs)
+
+	currSFS := &appsv1.StatefulSet{}
+	err := r.Client.Get(context.TODO(), types.NamespacedName{
+		Name:      serviceName,
+		Namespace: cr.Namespace,
+	}, currSFS)
+
+	if err != nil && !errors.IsNotFound(err) {
+		return err
+	}
+
+	if errors.IsNotFound(err) {
+		return r.Client.Create(context.TODO(), sfs)
+	}
+
+	if *currSFS.Spec.Replicas != cr.Spec.Size {
+		currSFS.Spec.Replicas = &cr.Spec.Size
+		return r.Client.Update(context.TODO(), currSFS)
+	}
+
+	return nil
 }

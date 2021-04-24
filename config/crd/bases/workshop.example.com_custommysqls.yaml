@@ -36,10 +36,11 @@ spec:
           spec:
             description: CustomMysqlSpec defines the desired state of CustomMysql
             properties:
-              foo:
+              size:
                 description: Foo is an example field of CustomMysql. Edit custommysql_types.go
                   to remove/update
-                type: string
+                format: int32
+                type: integer
             type: object
           status:
             description: CustomMysqlStatus defines the observed state of CustomMysql
