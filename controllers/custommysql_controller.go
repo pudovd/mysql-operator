@@ -52,7 +52,7 @@ type CustomMysqlReconciler struct {
 // For more details, check Reconcile and its Result here:
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.7.2/pkg/reconcile
 func (r *CustomMysqlReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
-	logger := r.Log.WithValues("custommysql", req.NamespacedName)
+	_ = r.Log.WithValues("custommysql", req.NamespacedName)
 
 	cr := &workshopv1alpha1.CustomMysql{}
 
@@ -74,8 +74,6 @@ func (r *CustomMysqlReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 	if err != nil {
 		return ctrl.Result{RequeueAfter: 5 * time.Second}, err
 	}
-
-	logger.Info("Got reconcile request", "foo field", cr.Spec.Size)
 
 	// your logic here
 
