@@ -27,6 +27,7 @@ func (r *CustomMysqlReconciler) CreateService(cr *v1alpha1.CustomMysql) error {
 		ObjectMeta: metav1.ObjectMeta{
 			Labels: labels,
 			Name:   serviceName,
+			Namespace: cr.Namespace,
 		},
 		Spec: corev1.ServiceSpec{
 			Type:      corev1.ServiceTypeClusterIP,
@@ -64,6 +65,7 @@ func (r *CustomMysqlReconciler) CreateSfs(cr *v1alpha1.CustomMysql) error {
 	sfs := &appsv1.StatefulSet{
 		ObjectMeta: metav1.ObjectMeta{
 			Name: serviceName,
+			Namespace: cr.Namespace,
 		},
 		Spec: appsv1.StatefulSetSpec{
 			Replicas: &cr.Spec.Size,
