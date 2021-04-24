@@ -18,6 +18,7 @@ package controllers
 
 import (
 	"context"
+	"k8s.io/apimachinery/pkg/types"
 
 	"github.com/go-logr/logr"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -49,6 +50,13 @@ type CustomMysqlReconciler struct {
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.7.2/pkg/reconcile
 func (r *CustomMysqlReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = r.Log.WithValues("custommysql", req.NamespacedName)
+
+	cr := &workshopv1alpha1.CustomMysql{}
+
+	r.Client.Get(ctx, types.NamespacedName{
+		Namespace: req.Namespace,
+		Name: req.Name,
+	}, cr)
 
 	// your logic here
 
