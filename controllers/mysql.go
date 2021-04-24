@@ -118,7 +118,8 @@ func (r *CustomMysqlReconciler) CreateSfs(cr *v1alpha1.CustomMysql) error {
 			VolumeClaimTemplates: []corev1.PersistentVolumeClaim{
 				{
 					ObjectMeta: metav1.ObjectMeta{
-						Name: "datadir",
+						Name:      "datadir",
+						Namespace: cr.Namespace,
 					},
 					Spec: corev1.PersistentVolumeClaimSpec{
 						AccessModes: []corev1.PersistentVolumeAccessMode{corev1.ReadWriteOnce},
