@@ -25,8 +25,8 @@ var labels = map[string]string{
 func (r *CustomMysqlReconciler) CreateService(cr *v1alpha1.CustomMysql) error {
 	srv := &corev1.Service{
 		ObjectMeta: metav1.ObjectMeta{
-			Labels: labels,
-			Name:   serviceName,
+			Labels:    labels,
+			Name:      serviceName,
 			Namespace: cr.Namespace,
 		},
 		Spec: corev1.ServiceSpec{
@@ -64,7 +64,7 @@ func (r *CustomMysqlReconciler) CreateSfs(cr *v1alpha1.CustomMysql) error {
 	fsGroup := int64(1001)
 	sfs := &appsv1.StatefulSet{
 		ObjectMeta: metav1.ObjectMeta{
-			Name: serviceName,
+			Name:      serviceName,
 			Namespace: cr.Namespace,
 		},
 		Spec: appsv1.StatefulSetSpec{
