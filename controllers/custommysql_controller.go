@@ -19,6 +19,7 @@ package controllers
 import (
 	"context"
 	"k8s.io/apimachinery/pkg/types"
+	"time"
 
 	"github.com/go-logr/logr"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -49,18 +50,24 @@ type CustomMysqlReconciler struct {
 // For more details, check Reconcile and its Result here:
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.7.2/pkg/reconcile
 func (r *CustomMysqlReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
-	_ = r.Log.WithValues("custommysql", req.NamespacedName)
+	logger := r.Log.WithValues("custommysql", req.NamespacedName)
 
 	cr := &workshopv1alpha1.CustomMysql{}
 
-	r.Client.Get(ctx, types.NamespacedName{
+	err := r.Client.Get(ctx, types.NamespacedName{
 		Namespace: req.Namespace,
 		Name: req.Name,
 	}, cr)
 
+	if err != nil {
+		return ctrl.Result{RequeueAfter: 5 * time.Second},err
+	}
+
+	logger.Info("Got reconcile request", "foo field", cr.Spec.Foo)
+
 	// your logic here
 
-	return ctrl.Result{}, nil
+	return ctrl.Result{RequeueAfter: 5 * time.Second}, nil
 }
 
 // SetupWithManager sets up the controller with the Manager.
