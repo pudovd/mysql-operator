@@ -29,7 +29,7 @@ type CustomMysqlSpec struct {
 	// Important: Run "make" to regenerate code after modifying this file
 
 	// Foo is an example field of CustomMysql. Edit custommysql_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	Size int32 `json:"size,omitempty"`
 }
 
 // CustomMysqlStatus defines the observed state of CustomMysql

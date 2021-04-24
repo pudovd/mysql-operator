@@ -63,7 +63,7 @@ func (r *CustomMysqlReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 		return ctrl.Result{RequeueAfter: 5 * time.Second}, err
 	}
 
-	logger.Info("Got reconcile request", "foo field", cr.Spec.Foo)
+	logger.Info("Got reconcile request", "foo field", cr.Spec.Size)
 
 	// your logic here
 

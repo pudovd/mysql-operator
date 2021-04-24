@@ -3,5 +3,4 @@ kind: CustomMysql
 metadata:
   name: custommysql-sample
 spec:
-  # Add fields here
-  foo: xyz
+  size: 2
