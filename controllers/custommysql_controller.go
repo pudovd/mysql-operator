@@ -39,6 +39,8 @@ type CustomMysqlReconciler struct {
 //+kubebuilder:rbac:groups=workshop.example.com,resources=custommysqls,verbs=get;list;watch;create;update;patch;delete
 //+kubebuilder:rbac:groups=workshop.example.com,resources=custommysqls/status,verbs=get;update;patch
 //+kubebuilder:rbac:groups=workshop.example.com,resources=custommysqls/finalizers,verbs=update
+//+kubebuilder:rbac:groups=core,resources=pods;pods/exec;services,verbs=get;list;watch;create;update;delete;patch
+//+kubebuilder:rbac:groups=apps,resources=deployments;replicasets;statefulsets,verbs=get;list;watch;create;update;delete;patch
 
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.
